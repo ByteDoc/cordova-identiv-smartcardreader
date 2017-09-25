@@ -21,7 +21,7 @@ import java.lang.reflect.*;
 
 public class IdentivSmartcardReader extends CordovaPlugin {
     public enum CordovaAction {
-        ECHO, TEST_READER
+        ECHO, TEST_READER, GET_USB_PERMISSION, ESTABLISH_CONTEXT, RELEASE_CONTEXT, TEST_LIST
     }
 
     IdentivSmartcardReader reader = null;
@@ -64,6 +64,14 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		switch (action) {
 			case TEST_READER:
 				return testReader(args, callbackContext);
+			case GET_USB_PERMISSION:
+				return getUSBPermission(args, callbackContext);
+			case ESTABLISH_CONTEXT:
+				return establishContext(args, callbackContext);
+			case RELEASE_CONTEXT:
+				return releaseContext(args, callbackContext);
+			case TEST_LIST:
+				return testList(args, callbackContext);
         }
         
         return false;
@@ -108,7 +116,75 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		} catch (JSONException e) {
 			Log.e("IdentivSmartcardReader", "JSONException: " + e);
 		}
+	}
+	
+	private void testList() {
+		long lRetval = 0;
+		ArrayList<String> deviceList = new ArrayList<String>();
+		SCard trans = new SCard();
+		lRetval = trans.SCardListReaders(getBaseContext(),deviceList);
+		argsObject.put("SCardListReaders", lRetval);
+		Log.d("SCardListReaders", "Result - " + lRetval);
 		
+		try{
+			argsObject.put("deviceList_size", deviceList.size());
+		} catch (JSONException e) {
+			Log.e("IdentivSmartcardReader", "JSONException: " + e);
+		}
+	}
+	
+	private boolean getUSBPermission(JSONArray args, CallbackContext callbackContext) {
+
+        try{
+			SCard trans = new SCard();
+			
+			long lRetval = trans.USBRequestPermission(getApplicationContext());
+			argsObject.put("USBRequestPermission", lRetval);
+			Log.d("USBRequestPermission", "Result - " + lRetval);
+        } catch (JSONException e) {
+            Log.e("IdentivSmartcardReader", "JSONException: " + e);
+        }
+		
+		callbackContext.success(args);
+        
+		return true;
+	}
+	
+	private boolean establishContext(JSONArray args, CallbackContext callbackContext) {
+
+        try{
+			SCard trans = new SCard();
+			
+			lRetval = trans.SCardEstablishContext(getBaseContext());
+			argsObject.put("SCardEstablishContext", lRetval);
+			Log.d("SCardEstablishContext", "Result - " + lRetval);
+		
+        } catch (JSONException e) {
+            Log.e("IdentivSmartcardReader", "JSONException: " + e);
+        }
+		
+		callbackContext.success(args);
+        
+		return true;
+	}
+	
+	private boolean releaseContext(JSONArray args, CallbackContext callbackContext) {
+
+        try{
+			SCard trans = new SCard();
+			
+			lRetval = trans.SCardReleaseContext();
+			argsObject.put("SCardReleaseContext", lRetval);
+			Log.d("SCardReleaseContext", "Result - " + lRetval);
+		
+		
+        } catch (JSONException e) {
+            Log.e("IdentivSmartcardReader", "JSONException: " + e);
+        }
+		
+		callbackContext.success(args);
+        
+		return true;
 	}
 	
 	private boolean testReader(JSONArray args, CallbackContext callbackContext) {
@@ -146,7 +222,6 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		
 		callbackContext.success(args);
         
-		
 		return true;
 	}
     
