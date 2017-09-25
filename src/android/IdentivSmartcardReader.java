@@ -77,6 +77,24 @@ public class IdentivSmartcardReader extends CordovaPlugin {
         return this.cordova.getActivity().getBaseContext();
     }
 	
+	private boolean readListOfReaders(JSONArray args, CallbackContext callbackContext) {
+		long lRetval = 0;
+		ArrayList<String> deviceList = new ArrayList<String>();
+		SCard trans = new SCard();
+		lRetval = trans.SCardListReaders(getBaseContext(),deviceList);
+		
+       	items = deviceList.toArray(new CharSequence[deviceList.size()]);
+		
+		String readerName, argsId;
+		for(int i=0; i< items.length; i++){
+			readerName = (String) items[i];
+			argsId = "Reader_id_" + i;
+			argsObject.put(argsId, readerName);
+			Log.d(argsId, readerName);
+		}
+		
+	}
+	
 	private boolean testReader(JSONArray args, CallbackContext callbackContext) {
 		
 		//JSONObject testResults;
@@ -94,9 +112,11 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 			argsObject.put("SCardEstablishContext", lRetval);
 			Log.d("SCardEstablishContext", "Result - " + lRetval);
 			
-			lRetval = trans.SCardDisconnect(1);
-			argsObject.put("SCardDisconnect", lRetval);
-			Log.d("SCardDisconnect", "Result - " + lRetval);
+			readListOfReaders();
+			
+			// lRetval = trans.SCardDisconnect(1);
+			// argsObject.put("SCardDisconnect", lRetval);
+			// Log.d("SCardDisconnect", "Result - " + lRetval);
 			
 			lRetval = trans.SCardReleaseContext();
 			argsObject.put("SCardReleaseContext", lRetval);
