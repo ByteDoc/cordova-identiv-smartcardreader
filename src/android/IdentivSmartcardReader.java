@@ -77,7 +77,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
         return this.cordova.getActivity().getBaseContext();
     }
 	
-	private boolean readListOfReaders(JSONArray args, CallbackContext callbackContext) {
+	private void readListOfReaders() {
 		long lRetval = 0;
 		ArrayList<String> deviceList = new ArrayList<String>();
 		SCard trans = new SCard();
