@@ -118,7 +118,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		}
 	}
 	
-	private void testList(JSONArray args, CallbackContext callbackContext) {
+	private boolean testList(JSONArray args, CallbackContext callbackContext) {
 		long lRetval = 0;
 		ArrayList<String> deviceList = new ArrayList<String>();
 		SCard trans = new SCard();
@@ -131,6 +131,8 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		} catch (JSONException e) {
 			Log.e("IdentivSmartcardReader", "JSONException: " + e);
 		}
+		
+		return true;
 	}
 	
 	private boolean getUSBPermission(JSONArray args, CallbackContext callbackContext) {
