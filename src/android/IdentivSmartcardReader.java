@@ -20,7 +20,7 @@ import java.lang.reflect.*;
 
 public class IdentivSmartcardReader extends CordovaPlugin {
     public enum CordovaAction {
-        ECHO
+        ECHO, TEST_READER
     }
 
     IdentivSmartcardReader reader = null;
@@ -60,12 +60,50 @@ public class IdentivSmartcardReader extends CordovaPlugin {
             return true;
         }
 
-        //switch (action) {
-
-        //}
+        switch (action) {
+			case TEST_READER:
+            return startRFIDReader();
+        }
         
         return false;
     }
+	
+	private void testReader(JSONArray args, CallbackContext callbackContext) {
+		
+		//JSONObject testResults;
+		
+        try{
+            //testResults = new JSONObject();
+			SCard trans = new SCard();
+			
+			long lRetval = trans.USBRequestPermission(getApplicationContext());
+			argsObject.put("USBRequestPermission", lRetval);
+			Log.d("USBRequestPermission", "Result - " + lRetval);
+			
+			lRetval = trans.SCardEstablishContext(getBaseContext());
+			argsObject.put("SCardEstablishContext", lRetval);
+			Log.d("SCardEstablishContext", "Result - " + lRetval);
+			
+			lRetval = trans.SCardDisconnect(1);
+			argsObject.put("SCardDisconnect", lRetval);
+			Log.d("SCardDisconnect", "Result - " + lRetval);
+			
+			lRetval = trans.SCardReleaseContext();
+			argsObject.put("SCardReleaseContext", lRetval);
+			Log.d("SCardReleaseContext", "Result - " + lRetval);
+		
+		
+        } catch (JSONException e) {
+            Log.e("IdentivSmartcardReader", "JSONException: " + e);
+        }
+		
+		
+		if (message != null && message.length() > 0) {
+            callbackContext.success(args);
+        } else {
+            callbackContext.error("Expected one non-empty string argument.");
+        }
+	}
     
     private void echo(String message, CallbackContext callbackContext, JSONArray args) {
         if (message != null && message.length() > 0) {

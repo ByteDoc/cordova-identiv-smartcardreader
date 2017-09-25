@@ -4,14 +4,15 @@ var IdentivSmartcardReader = (function () {
     "use strict";
     var CORDOVA_PLUGIN_NAME = "IdentivSmartcardReader",
 		CORDOVA_ACTION_ECHO = "ECHO",
+		CORDOVA_ACTION_TEST_READER = "TEST_READER",
 
 		
 		argsObject = {},
 		argsArray = [],
 		
 		successCallback,
-		errorCallback,
-		inventoryProcessCallback;
+		errorCallback;
+		
     function debugLog(message) {
         console.log("IdentivSmartcardReader.js: " + message);
     }
@@ -54,6 +55,12 @@ var IdentivSmartcardReader = (function () {
             // argsArray
 		// );
     }
+	
+	
+	function testReader(args, successCallback, errorCallback) {
+		var argsArray = getArgsArray(args);
+        cordova.exec(successCallback, errorCallback, CORDOVA_PLUGIN_NAME, CORDOVA_ACTION_TEST_READER, argsArray);
+	}
 
 
 
@@ -62,14 +69,16 @@ var IdentivSmartcardReader = (function () {
         cordova.exec(successCallback, errorCallback, CORDOVA_PLUGIN_NAME, CORDOVA_ACTION_ECHO, argsArray);
     }
     return {
-        echo: echo
+        echo: echo,
+		testReader: testReader
     };
 
 
 }());
 
 module.exports = {
-	echo: IdentivSmartcardReader.echo
+	echo: IdentivSmartcardReader.echo,
+	testReader: IdentivSmartcardReader.testReader
 };
 
 
