@@ -5,12 +5,12 @@
     <description>Identiv Smartcard-Reader Plugin - for USB-attached devices on Android</description>
     <license>Apache 2.0</license>
     <keywords>cordova,identiv,smartcard</keywords>
-    <js-module src="www/identiv-smartcardreader.js" name="identiv-smartcardreader">
+    <js-module src="www/IdentivSmartcardReader.js" name="IdentivSmartcardReader">
 	<!--
 		target ist the definition how you can access your plugin from outside,
 		e.g. cordova.plugins.echo.echo("my first string", success, failure);
 	-->
-        <clobbers target="cordova.plugins.identiv-smartcardreader" />
+        <clobbers target="cordova.plugins.IdentivSmartcardReader" />
     </js-module>
 	<platform name="android">
 		<config-file target="config.xml" parent="/*">
