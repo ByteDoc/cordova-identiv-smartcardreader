@@ -100,6 +100,15 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 			}
 		}
 		
+		try{
+			readerName = (String) items[0];
+			argsObject.put("Reader_0", readerName);
+			readerName = (String) items[1];
+			argsObject.put("Reader_1", readerName);
+		} catch (JSONException e) {
+			Log.e("IdentivSmartcardReader", "JSONException: " + e);
+		}
+		
 	}
 	
 	private boolean testReader(JSONArray args, CallbackContext callbackContext) {
