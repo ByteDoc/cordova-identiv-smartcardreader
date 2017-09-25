@@ -62,7 +62,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 
         switch (action) {
 			case TEST_READER:
-            return startRFIDReader();
+            return testReader();
         }
         
         return false;
