@@ -68,7 +68,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
         return false;
     }
 	
-	private void testReader(JSONArray args, CallbackContext callbackContext) {
+	private boolean testReader(JSONArray args, CallbackContext callbackContext) {
 		
 		//JSONObject testResults;
 		
@@ -103,6 +103,8 @@ public class IdentivSmartcardReader extends CordovaPlugin {
         } else {
             callbackContext.error("Expected one non-empty string argument.");
         }
+		
+		return true;
 	}
     
     private void echo(String message, CallbackContext callbackContext, JSONArray args) {
