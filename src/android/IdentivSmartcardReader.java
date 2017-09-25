@@ -123,10 +123,11 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		ArrayList<String> deviceList = new ArrayList<String>();
 		SCard trans = new SCard();
 		lRetval = trans.SCardListReaders(getBaseContext(),deviceList);
-		argsObject.put("SCardListReaders", lRetval);
-		Log.d("SCardListReaders", "Result - " + lRetval);
-		
+
 		try{
+			argsObject.put("SCardListReaders", lRetval);
+			Log.d("SCardListReaders", "Result - " + lRetval);
+		
 			argsObject.put("deviceList_size", deviceList.size());
 		} catch (JSONException e) {
 			Log.e("IdentivSmartcardReader", "JSONException: " + e);
