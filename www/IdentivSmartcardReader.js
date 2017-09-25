@@ -5,6 +5,11 @@ var IdentivSmartcardReader = (function () {
     var CORDOVA_PLUGIN_NAME = "IdentivSmartcardReader",
 		CORDOVA_ACTION_ECHO = "ECHO",
 		CORDOVA_ACTION_TEST_READER = "TEST_READER",
+		
+		CORDOVA_ACTION_GET_USB_PERMISSION = "GET_USB_PERMISSION",
+		CORDOVA_ACTION_ESTABLISH_CONTEXT = "ESTABLISH_CONTEXT",
+		CORDOVA_ACTION_RELEASE_CONTEXT = "RELEASE_CONTEXT",
+		CORDOVA_ACTION_TEST_LIST = "TEST_LIST",
 
 		
 		argsObject = {},
@@ -61,6 +66,28 @@ var IdentivSmartcardReader = (function () {
 		var argsArray = getArgsArray(args);
         cordova.exec(successCallback, errorCallback, CORDOVA_PLUGIN_NAME, CORDOVA_ACTION_TEST_READER, argsArray);
 	}
+	
+	
+	
+	function getUSBPermission(args, successCallback, errorCallback) {
+		var argsArray = getArgsArray(args);
+        cordova.exec(successCallback, errorCallback, CORDOVA_PLUGIN_NAME, CORDOVA_ACTION_GET_USB_PERMISSION, argsArray);
+	}
+	
+	function establishContext(args, successCallback, errorCallback) {
+		var argsArray = getArgsArray(args);
+        cordova.exec(successCallback, errorCallback, CORDOVA_PLUGIN_NAME, CORDOVA_ACTION_ESTABLISH_CONTEXT, argsArray);
+	}
+	
+	function releaseContext(args, successCallback, errorCallback) {
+		var argsArray = getArgsArray(args);
+        cordova.exec(successCallback, errorCallback, CORDOVA_PLUGIN_NAME, CORDOVA_ACTION_RELEASE_CONTEXT, argsArray);
+	}
+	
+	function testList(args, successCallback, errorCallback) {
+		var argsArray = getArgsArray(args);
+        cordova.exec(successCallback, errorCallback, CORDOVA_PLUGIN_NAME, CORDOVA_ACTION_TEST_LIST, argsArray);
+	}
 
 
 
@@ -70,7 +97,11 @@ var IdentivSmartcardReader = (function () {
     }
     return {
         echo: echo,
-		testReader: testReader
+		testReader: testReader,
+		getUSBPermission: getUSBPermission,
+		establishContext: establishContext,
+		releaseContext: releaseContext,
+		testList: testList
     };
 
 
@@ -78,7 +109,15 @@ var IdentivSmartcardReader = (function () {
 
 module.exports = {
 	echo: IdentivSmartcardReader.echo,
-	testReader: IdentivSmartcardReader.testReader
+	testReader: IdentivSmartcardReader.testReader,
+	
+	getUSBPermission: IdentivSmartcardReader.getUSBPermission,
+	establishContext: IdentivSmartcardReader.establishContext,
+	releaseContext: IdentivSmartcardReader.releaseContext,
+	testList: IdentivSmartcardReader.testList
 };
 
-
+CORDOVA_ACTION_GET_USB_PERMISSION = "GET_USB_PERMISSION",
+		CORDOVA_ACTION_ESTABLISH_CONTEXT = "ESTABLISH_CONTEXT",
+		CORDOVA_ACTION_RELEASE_CONTEXT = "RELEASE_CONTEXT",
+		CORDOVA_ACTION_TEST_LIST = "TEST_LIST",
