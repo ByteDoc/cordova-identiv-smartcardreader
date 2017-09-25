@@ -16,6 +16,7 @@ import com.identive.libs.WinDefs;
 
 import java.util.*;
 import android.util.Log;
+import android.content.*;
 import java.lang.reflect.*;
 
 public class IdentivSmartcardReader extends CordovaPlugin {
