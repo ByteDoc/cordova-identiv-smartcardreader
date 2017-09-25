@@ -116,8 +116,3 @@ module.exports = {
 	releaseContext: IdentivSmartcardReader.releaseContext,
 	testList: IdentivSmartcardReader.testList
 };
-
-CORDOVA_ACTION_GET_USB_PERMISSION = "GET_USB_PERMISSION",
-		CORDOVA_ACTION_ESTABLISH_CONTEXT = "ESTABLISH_CONTEXT",
-		CORDOVA_ACTION_RELEASE_CONTEXT = "RELEASE_CONTEXT",
-		CORDOVA_ACTION_TEST_LIST = "TEST_LIST",
