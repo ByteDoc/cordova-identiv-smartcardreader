@@ -118,7 +118,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		}
 	}
 	
-	private void testList() {
+	private void testList(JSONArray args, CallbackContext callbackContext) {
 		long lRetval = 0;
 		ArrayList<String> deviceList = new ArrayList<String>();
 		SCard trans = new SCard();
@@ -155,7 +155,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
         try{
 			SCard trans = new SCard();
 			
-			lRetval = trans.SCardEstablishContext(getBaseContext());
+			long lRetval = trans.SCardEstablishContext(getBaseContext());
 			argsObject.put("SCardEstablishContext", lRetval);
 			Log.d("SCardEstablishContext", "Result - " + lRetval);
 		
@@ -173,7 +173,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
         try{
 			SCard trans = new SCard();
 			
-			lRetval = trans.SCardReleaseContext();
+			long lRetval = trans.SCardReleaseContext();
 			argsObject.put("SCardReleaseContext", lRetval);
 			Log.d("SCardReleaseContext", "Result - " + lRetval);
 		
