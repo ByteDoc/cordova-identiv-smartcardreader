@@ -12,7 +12,8 @@ import com.identive.libs.SCard;
 import com.identive.libs.SCard.SCardAttribute;
 import com.identive.libs.SCard.SCardIOBuffer;
 import com.identive.libs.SCard.SCardState;
-import com.identive.libs.WinDefs;
+import com.identive.libs.WinDefs.*;
+import com.identive.libs.*;
 
 import java.util.*;
 import android.util.Log;
