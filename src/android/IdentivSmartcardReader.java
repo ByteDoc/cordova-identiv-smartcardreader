@@ -161,7 +161,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 			
 			String readerName = getReaderById(1);
 			
-			long status = trans.SCardConnect(readerName, SCARD_SHARE_EXCLUSIVE, SCARD_PROTOCOL_TX); 	
+			long status = trans.SCardConnect(readerName, WinDefs.SCARD_SHARE_EXCLUSIVE, WinDefs.SCARD_PROTOCOL_TX); 	
 			
 			argsObject.put("SCardConnect", status);
 			Log.d("SCardConnect", "Result - " + status);
@@ -179,7 +179,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
         try{
 			SCard trans = new SCard();
 			
-			long status = trans.SCardDisconnect(SCARD_LEAVE_CARD); 	
+			long status = trans.SCardDisconnect(WinDefs.SCARD_LEAVE_CARD); 	
 			
 			argsObject.put("SCardDisconnect", status);
 			Log.d("SCardDisconnect", "Result - " + status);
