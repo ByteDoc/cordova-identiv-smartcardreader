@@ -83,6 +83,8 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		SCard trans = new SCard();
 		lRetval = trans.SCardListReaders(getBaseContext(),deviceList);
 		
+		CharSequence[] items = null;
+		
        	items = deviceList.toArray(new CharSequence[deviceList.size()]);
 		
 		String readerName, argsId;
