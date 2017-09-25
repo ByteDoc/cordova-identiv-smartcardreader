@@ -108,11 +108,8 @@ public class IdentivSmartcardReader extends CordovaPlugin {
         }
 		
 		
-		if (message != null && message.length() > 0) {
-            callbackContext.success(args);
-        } else {
-            callbackContext.error("Expected one non-empty string argument.");
-        }
+		callbackContext.success(args);
+        
 		
 		return true;
 	}
