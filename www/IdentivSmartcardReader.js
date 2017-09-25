@@ -11,6 +11,7 @@ var IdentivSmartcardReader = (function () {
 		CORDOVA_ACTION_RELEASE_CONTEXT = "RELEASE_CONTEXT",
 		CORDOVA_ACTION_TEST_LIST = "TEST_LIST",
 		CORDOVA_ACTION_CARD_CONNECT = "CARD_CONNECT",
+		CORDOVA_ACTION_CARD_DISCONNECT = "CARD_DISCONNECT",
 
 		
 		argsObject = {},
@@ -96,6 +97,11 @@ var IdentivSmartcardReader = (function () {
 		var argsArray = getArgsArray(args);
         cordova.exec(successCallback, errorCallback, CORDOVA_PLUGIN_NAME, CORDOVA_ACTION_CARD_CONNECT, argsArray);
 	}
+	
+	function cardDisconnect(args, successCallback, errorCallback) {
+		var argsArray = getArgsArray(args);
+        cordova.exec(successCallback, errorCallback, CORDOVA_PLUGIN_NAME, CORDOVA_ACTION_CARD_DISCONNECT, argsArray);
+	}
 
 
 
@@ -110,7 +116,9 @@ var IdentivSmartcardReader = (function () {
 		establishContext: establishContext,
 		releaseContext: releaseContext,
 		testList: testList,
-		cardConnect: cardConnect
+		
+		cardConnect: cardConnect,
+		cardDisconnect: cardDisconnect
     };
 
 
@@ -125,5 +133,6 @@ module.exports = {
 	releaseContext: IdentivSmartcardReader.releaseContext,
 	testList: IdentivSmartcardReader.testList,
 	
-	cardConnect: IdentivSmartcardReader.cardConnect
+	cardConnect: IdentivSmartcardReader.cardConnect,
+	cardDisconnect: IdentivSmartcardReader.cardDisconnect
 };

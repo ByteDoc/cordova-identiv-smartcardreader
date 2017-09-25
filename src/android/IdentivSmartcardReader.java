@@ -21,7 +21,7 @@ import java.lang.reflect.*;
 
 public class IdentivSmartcardReader extends CordovaPlugin {
     public enum CordovaAction {
-        ECHO, TEST_READER, GET_USB_PERMISSION, ESTABLISH_CONTEXT, RELEASE_CONTEXT, TEST_LIST, CARD_CONNECT
+        ECHO, TEST_READER, GET_USB_PERMISSION, ESTABLISH_CONTEXT, RELEASE_CONTEXT, TEST_LIST, CARD_CONNECT, CARD_DISCONNECT
     }
 
     IdentivSmartcardReader reader = null;
@@ -75,6 +75,8 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 				
 			case CARD_CONNECT:
 				return cardConnect(args, callbackContext);
+			case CARD_DISCONNECT:
+				return cardDisconnect(args, callbackContext);
         }
         
         return false;
@@ -172,7 +174,23 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		return true;
 	}
 	
-	long status = trans.SCardConnect(selectedRdr, selectedMode, selectedProtocol); 
+	private boolean cardDisconnect(JSONArray args, CallbackContext callbackContext) {
+
+        try{
+			SCard trans = new SCard();
+			
+			long status = trans.SCardDisconnect(SCARD_LEAVE_CARD); 	
+			
+			argsObject.put("SCardDisconnect", status);
+			Log.d("SCardDisconnect", "Result - " + status);
+        } catch (JSONException e) {
+            Log.e("IdentivSmartcardReader", "JSONException: " + e);
+        }
+		
+		callbackContext.success(args);
+        
+		return true;
+	}
 	
 	private boolean getUSBPermission(JSONArray args, CallbackContext callbackContext) {
 
