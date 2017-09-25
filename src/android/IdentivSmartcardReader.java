@@ -63,7 +63,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 
 		switch (action) {
 			case TEST_READER:
-				return testReader();
+				return testReader(args, callbackContext);
         }
         
         return false;
@@ -74,7 +74,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
     }
 	
 	private Context getBaseContext() {
-        return this.cordova.getActivity().getApplicationContext().getBaseContext();
+        return this.cordova.getActivity().getBaseContext();
     }
 	
 	private boolean testReader(JSONArray args, CallbackContext callbackContext) {
