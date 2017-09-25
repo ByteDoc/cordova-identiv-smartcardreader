@@ -60,9 +60,9 @@ public class IdentivSmartcardReader extends CordovaPlugin {
             return true;
         }
 
-        switch (action) {
+		switch (action) {
 			case TEST_READER:
-            return testReader();
+				return testReader();
         }
         
         return false;
@@ -76,7 +76,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
             //testResults = new JSONObject();
 			SCard trans = new SCard();
 			
-			long lRetval = trans.USBRequestPermission(getApplicationContext());
+			long lRetval = trans.USBRequestPermission(callbackContext);
 			argsObject.put("USBRequestPermission", lRetval);
 			Log.d("USBRequestPermission", "Result - " + lRetval);
 			
