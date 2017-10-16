@@ -345,6 +345,8 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 			rgReaderStates[0].setnEventState(nTemp);
 		}while(true);
 		
+		return true;
+		
 	}
 	
 	
