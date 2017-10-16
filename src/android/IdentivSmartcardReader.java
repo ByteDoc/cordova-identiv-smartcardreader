@@ -299,7 +299,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		String sstr = "";
 		boolean flag = false;
 		
-		String selectedRdr = "IdentivuTrust 4701 F CL Reader 0";
+		String selectedRdr = "Identiv uTrust 4701 F CL Reader 0";
 		//selectedRdr = (String) items[item];
 		
 		SCARD_READERSTATE[] rgReaderStates = new SCARD_READERSTATE[5];
