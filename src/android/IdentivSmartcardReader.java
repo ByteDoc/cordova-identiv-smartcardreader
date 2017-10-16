@@ -352,10 +352,8 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 				}else{
 					sstr = "Card Absent";
 				}
-	//				}else{
-	//					sstr = "State not changed";
 			}
-			if (sstr != "") {
+			if (sstr != "" && sstr != "Card Absent") {
 				try{
 					argsObject.put("readerId", sstr);
 					Log.d("IdentivSmartcardReader", "Result - " + sstr);
