@@ -337,8 +337,9 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 					Log.e("IdentivSmartcardReader", "JSONException: " + e);
 				}
 				callbackContext.success(args);
+				
+				return true;
 			}
-			publishProgress(sstr);
 			int nTemp = rgReaderStates[0].getnCurrentState(); 
 			rgReaderStates[0].setnCurrentState(rgReaderStates[0].getnEventState());
 			rgReaderStates[0].setnEventState(nTemp);
