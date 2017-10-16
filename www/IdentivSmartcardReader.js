@@ -146,5 +146,5 @@ module.exports = {
 	cardConnect: IdentivSmartcardReader.cardConnect,
 	cardDisconnect: IdentivSmartcardReader.cardDisconnect,
 	
-	getCardStatusChange: getCardStatusChange
+	getCardStatusChange: IdentivSmartcardReader.getCardStatusChange
 };
