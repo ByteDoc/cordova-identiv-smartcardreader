@@ -22,7 +22,7 @@ import java.lang.reflect.*;
 
 public class IdentivSmartcardReader extends CordovaPlugin {
     public enum CordovaAction {
-        ECHO, TEST_READER, GET_USB_PERMISSION, ESTABLISH_CONTEXT, RELEASE_CONTEXT, TEST_LIST, CARD_CONNECT, CARD_DISCONNECT
+        ECHO, TEST_READER, GET_USB_PERMISSION, ESTABLISH_CONTEXT, RELEASE_CONTEXT, TEST_LIST, CARD_CONNECT, CARD_DISCONNECT, GET_CARD_STATUS_CHANGE
     }
 
     IdentivSmartcardReader reader = null;
