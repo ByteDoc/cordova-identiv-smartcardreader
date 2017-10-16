@@ -298,6 +298,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		SCard trans = new SCard();
 		String sstr = "";
 		boolean flag = false;
+		CharSequence[] items = null;
 		
 		String selectedRdr = "Identiv uTrust 4701 F CL Reader 0";
 		//selectedRdr = (String) items[item];
@@ -315,6 +316,13 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 			ArrayList<String> deviceList = new ArrayList<String>();
 			lRetval = trans.SCardListReaders(getBaseContext(),deviceList);
 			Log.d("SCardListReaders", "Result - " + lRetval);
+			
+			lRetval = trans.SCardListReaders(getBaseContext(),deviceList);
+			Log.d("IdenitveGetZ", "Result - " + lRetval);
+			items = deviceList.toArray(new CharSequence[deviceList.size()]);
+
+			selectedRdr = (String) items[1];
+			
         } catch (JSONException e) {
             Log.e("IdentivSmartcardReader", "JSONException: " + e);
 			return true;
