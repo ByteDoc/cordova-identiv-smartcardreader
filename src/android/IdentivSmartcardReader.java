@@ -297,7 +297,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		
 		SCard trans = new SCard();
 		String sstr = "";
-		boolean flag = true;
+		boolean flag = false;
 		
 		String selectedRdr = "IdentivuTrust 4701 F CL Reader 0";
 		//selectedRdr = (String) items[item];
