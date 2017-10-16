@@ -303,10 +303,6 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		//selectedRdr = (String) items[item];
 		
 		try{
-            //testResults = new JSONObject();
-			SCard trans = new SCard();
-			
-			
 			long lRetval = trans.USBRequestPermission(getApplicationContext());
 			argsObject.put("USBRequestPermission", lRetval);
 			Log.d("USBRequestPermission", "Result - " + lRetval);
