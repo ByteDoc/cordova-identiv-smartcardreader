@@ -302,6 +302,23 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		String selectedRdr = "Identiv uTrust 4701 F CL Reader 0";
 		//selectedRdr = (String) items[item];
 		
+		try{
+            //testResults = new JSONObject();
+			SCard trans = new SCard();
+			
+			
+			long lRetval = trans.USBRequestPermission(getApplicationContext());
+			argsObject.put("USBRequestPermission", lRetval);
+			Log.d("USBRequestPermission", "Result - " + lRetval);
+			
+			lRetval = trans.SCardEstablishContext(getBaseContext());
+			argsObject.put("SCardEstablishContext", lRetval);
+			Log.d("SCardEstablishContext", "Result - " + lRetval);
+        } catch (JSONException e) {
+            Log.e("IdentivSmartcardReader", "JSONException: " + e);
+			return true;
+        }
+		
 		SCARD_READERSTATE[] rgReaderStates = new SCARD_READERSTATE[5];
 		rgReaderStates[0] = trans.new SCARD_READERSTATE();
 		rgReaderStates[0].setnCurrentState(WinDefs.SCARD_STATE_UNAWARE);
