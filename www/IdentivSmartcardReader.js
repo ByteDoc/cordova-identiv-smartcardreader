@@ -12,6 +12,8 @@ var IdentivSmartcardReader = (function () {
 		CORDOVA_ACTION_TEST_LIST = "TEST_LIST",
 		CORDOVA_ACTION_CARD_CONNECT = "CARD_CONNECT",
 		CORDOVA_ACTION_CARD_DISCONNECT = "CARD_DISCONNECT",
+		
+		CORDOVA_ACTION_GET_CARD_STATUS_CHANGE = "GET_CARD_STATUS_CHANGE",
 
 		
 		argsObject = {},
@@ -102,6 +104,12 @@ var IdentivSmartcardReader = (function () {
 		var argsArray = getArgsArray(args);
         cordova.exec(successCallback, errorCallback, CORDOVA_PLUGIN_NAME, CORDOVA_ACTION_CARD_DISCONNECT, argsArray);
 	}
+	
+	
+	function getCardStatusChange(args, successCallback, errorCallback) {
+		var argsArray = getArgsArray(args);
+		cordova.exec(successCallback, errorCallback, CORDOVA_PLUGIN_NAME, CORDOVA_ACTION_GET_CARD_STATUS_CHANGE, argsArray);
+	}
 
 
 
@@ -118,7 +126,9 @@ var IdentivSmartcardReader = (function () {
 		testList: testList,
 		
 		cardConnect: cardConnect,
-		cardDisconnect: cardDisconnect
+		cardDisconnect: cardDisconnect,
+		
+		getCardStatusChange: getCardStatusChange
     };
 
 
@@ -134,5 +144,7 @@ module.exports = {
 	testList: IdentivSmartcardReader.testList,
 	
 	cardConnect: IdentivSmartcardReader.cardConnect,
-	cardDisconnect: IdentivSmartcardReader.cardDisconnect
+	cardDisconnect: IdentivSmartcardReader.cardDisconnect,
+	
+	getCardStatusChange: getCardStatusChange
 };

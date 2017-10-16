@@ -74,6 +74,9 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 			case TEST_LIST:
 				return testList(args, callbackContext);
 				
+			case GET_CARD_STATUS_CHANGE:
+				return getCardStatusChange(args, callbackContext);
+				
 			case CARD_CONNECT:
 				return cardConnect(args, callbackContext);
 			case CARD_DISCONNECT:
@@ -132,7 +135,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 
 		try{
 			argsObject.put("SCardListReaders", lRetval);
-			Log.d("SCardListReaders", "Result - " + lRetval);
+			Log.d("IdentivSmartcardReader", "Result - " + lRetval);
 		
 			argsObject.put("deviceList_size", deviceList.size());
 		} catch (JSONException e) {
@@ -289,6 +292,61 @@ public class IdentivSmartcardReader extends CordovaPlugin {
         
 		return true;
 	}
+	
+	private boolean getCardStatusChange(JSONArray args, CallbackContext callbackContext) {
+		
+		SCard trans = new SCard();
+		String sstr = "";
+		boolean flag = true;
+		
+		String selectedRdr = "IdentivuTrust 4701 F CL Reader 0";
+		//selectedRdr = (String) items[item];
+		
+		SCARD_READERSTATE[] rgReaderStates = new SCARD_READERSTATE[5];
+		rgReaderStates[0] = trans.new SCARD_READERSTATE();
+		rgReaderStates[0].setnCurrentState(WinDefs.SCARD_STATE_UNAWARE);
+		rgReaderStates[0].setSzReader(selectedRdr);
+		
+		do{
+			if(flag) break;
+			
+			long lRetVal = trans.SCardGetStatusChange(0, rgReaderStates, 1);
+			if((rgReaderStates[0].getnEventState() & WinDefs.SCARD_STATE_CHANGED) == WinDefs.SCARD_STATE_CHANGED){
+				rgReaderStates[0].setnEventState(rgReaderStates[0].getnEventState() - WinDefs.SCARD_STATE_CHANGED);
+				if(rgReaderStates[0].getnEventState() == WinDefs.SCARD_STATE_PRESENT){
+					sstr = "";
+					for(int i = 0; i < rgReaderStates[0].getnAtr(); i++){
+						int temp = rgReaderStates[0].getabyAtr()[i] & 0xFF;
+						if(temp < 16){
+							sstr = sstr.toUpperCase() + "0" + Integer.toHexString(rgReaderStates[0].getabyAtr()[i]) + " ";
+						}else{
+							sstr = sstr.toUpperCase() + Integer.toHexString(temp) + " " ;
+						}
+					}
+				}else{
+					sstr = "Card Absent";
+				}
+	//				}else{
+	//					sstr = "State not changed";
+			}
+			if (sstr != "") {
+				try{
+					argsObject.put("readerId", sstr);
+					Log.d("IdentivSmartcardReader", "Result - " + sstr);
+				} catch (JSONException e) {
+					Log.e("IdentivSmartcardReader", "JSONException: " + e);
+				}
+				callbackContext.success(args);
+			}
+			publishProgress(sstr);
+			int nTemp = rgReaderStates[0].getnCurrentState(); 
+			rgReaderStates[0].setnCurrentState(rgReaderStates[0].getnEventState());
+			rgReaderStates[0].setnEventState(nTemp);
+		}while(true);
+		
+	}
+	
+	
     
     private void echo(String message, CallbackContext callbackContext, JSONArray args) {
         if (message != null && message.length() > 0) {
