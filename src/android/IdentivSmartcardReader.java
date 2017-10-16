@@ -303,6 +303,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		//selectedRdr = (String) items[item];
 		
 		try{
+			
 			long lRetval = trans.USBRequestPermission(getApplicationContext());
 			argsObject.put("USBRequestPermission", lRetval);
 			Log.d("USBRequestPermission", "Result - " + lRetval);
@@ -310,6 +311,11 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 			lRetval = trans.SCardEstablishContext(getBaseContext());
 			argsObject.put("SCardEstablishContext", lRetval);
 			Log.d("SCardEstablishContext", "Result - " + lRetval);
+			
+			ArrayList<String> deviceList = new ArrayList<String>();
+			SCard trans = new SCard();
+			lRetval = trans.SCardListReaders(getBaseContext(),deviceList);
+			Log.d("SCardListReaders", "Result - " + lRetval);
         } catch (JSONException e) {
             Log.e("IdentivSmartcardReader", "JSONException: " + e);
 			return true;
