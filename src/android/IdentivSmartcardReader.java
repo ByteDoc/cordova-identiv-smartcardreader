@@ -355,8 +355,8 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 					// }
 					
 					// connect the card to read details
-					int mode = (int) WinDefs.SCARD_SHARE_SHARED;
-					int protocol = (int) WinDefs.SCARD_PROTOCOL_T0;
+					int mode = (int) WinDefs.SCARD_SHARE_EXCLUSIVE;
+					int protocol = (int) WinDefs.SCARD_PROTOCOL_TX;
 					
 					long status = trans.SCardConnect(selectedRdr, mode, protocol); 	
 					
@@ -365,6 +365,17 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 						Log.d("SCardConnect", "Result - " + status);
 					} catch (JSONException e) {
 						Log.e("IdentivSmartcardReader", "JSONException: " + e);
+					}
+					
+					if (status < 0) {
+						// TRY AGAIN
+						status = trans.SCardConnect(selectedRdr, mode, protocol); 	
+						try{
+							argsObject.put("SCardConnect_2", status);
+							Log.d("SCardConnect_2", "Result - " + status);
+						} catch (JSONException e) {
+							Log.e("IdentivSmartcardReader", "JSONException: " + e);
+						}
 					}
 		
 		
