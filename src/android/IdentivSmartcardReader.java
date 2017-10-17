@@ -405,6 +405,11 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 						transmit.setnInBufferSize(newBuf2.length);
 						transmit.setAbyInBuffer(newBuf2);
 						Log.d("SCardControl_TRANSMIT", "using newBuf2");
+						for(int i = 0; i < newBuf2.length; i++){
+							Log.d("SCardControl_TRANSMIT", "newBuf2["+i+"]=(" + newBuf2[i] + ")");
+						}
+						
+						
 						
 						transmit.setnOutBufferSize(0xffffff);
 						transmit.setAbyOutBuffer(new byte[0xffffff]);
