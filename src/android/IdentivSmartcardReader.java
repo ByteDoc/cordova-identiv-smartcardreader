@@ -373,7 +373,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 					byte[] buf = transmitCmd.getBytes();
 					byte[] inbuf = new byte[transmitCmd.length()/2];
 					byte[] newBuf = { (byte) 255, (byte) 202, 00, 00, 00 };
-					byte[] newBuf2;
+					byte[] newBuf2 = new byte[5];
 					newBuf2[0] = (byte) (Integer.parseInt("ff",16) & 0xff);
 					newBuf2[1] = (byte) (Integer.parseInt("ca",16) & 0xff);
 					newBuf2[2] = (byte) (Integer.parseInt("00",16) & 0xff);
