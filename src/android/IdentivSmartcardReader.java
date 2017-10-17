@@ -345,14 +345,14 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 				rgReaderStates[0].setnEventState(rgReaderStates[0].getnEventState() - WinDefs.SCARD_STATE_CHANGED);
 				if(rgReaderStates[0].getnEventState() == WinDefs.SCARD_STATE_PRESENT){
 					sstr = "";
-					for(int i = 0; i < rgReaderStates[0].getnAtr(); i++){
-						int temp = rgReaderStates[0].getabyAtr()[i] & 0xFF;
-						if(temp < 16){
-							sstr = sstr.toUpperCase() + "0" + Integer.toHexString(rgReaderStates[0].getabyAtr()[i]) + " ";
-						}else{
-							sstr = sstr.toUpperCase() + Integer.toHexString(temp) + " " ;
-						}
-					}
+					// for(int i = 0; i < rgReaderStates[0].getnAtr(); i++){
+						// int temp = rgReaderStates[0].getabyAtr()[i] & 0xFF;
+						// if(temp < 16){
+							// sstr = sstr.toUpperCase() + "0" + Integer.toHexString(rgReaderStates[0].getabyAtr()[i]) + " ";
+						// }else{
+							// sstr = sstr.toUpperCase() + Integer.toHexString(temp) + " " ;
+						// }
+					// }
 					
 					// connect the card to read details
 					int mode = (int) WinDefs.SCARD_SHARE_EXCLUSIVE;
@@ -372,8 +372,17 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 					// taken from https://stackoverflow.com/questions/9514684/what-apdu-command-gets-card-id
 					byte[] buf = transmitCmd.getBytes();
 					byte[] inbuf = new byte[transmitCmd.length()/2];
+					byte[] newBuf = { (byte) 255, (byte) 202, 00, 00, 00 };
+					byte[] newBuf2;
+					newBuf2[0] = (byte) (Integer.parseInt("ff",16) & 0xff);
+					newBuf2[1] = (byte) (Integer.parseInt("ca",16) & 0xff);
+					newBuf2[2] = (byte) (Integer.parseInt("00",16) & 0xff);
+					newBuf2[3] = (byte) (Integer.parseInt("00",16) & 0xff);
+					newBuf2[4] = (byte) (Integer.parseInt("00",16) & 0xff);
 					do{
 						for(int i = 0; i < inbuf.length*2; i++){
+							//(byte) (Integer.parseInt("ef",16) & 0xff);
+							
 							if(48 <= buf[i] && buf[i] <= 57){
 								Log.d("SCardControl_TRANSMIT", "buf["+i+"]=(" + buf[i] + ")");
 								buf[i] = (byte) ((buf[i] & 0x0F));
@@ -390,8 +399,12 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 						
 						
 						SCardIOBuffer transmit = trans.new SCardIOBuffer();
-						transmit.setnInBufferSize(inbuf.length);
-						transmit.setAbyInBuffer(inbuf);
+						//transmit.setnInBufferSize(inbuf.length);
+						//transmit.setAbyInBuffer(inbuf);
+						
+						transmit.setnInBufferSize(newBuf.length);
+						transmit.setAbyInBuffer(newBuf);
+						
 						transmit.setnOutBufferSize(0xffffff);
 						transmit.setAbyOutBuffer(new byte[0xffffff]);
 						long lRetval = trans.SCardControl((int)WinDefs.IOCTL_CCID_ESCAPE, transmit);
