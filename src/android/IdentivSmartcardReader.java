@@ -356,7 +356,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 					
 					// connect the card to read details
 					int mode = (int) WinDefs.SCARD_SHARE_EXCLUSIVE;
-					int protocol = (int) WinDefs.SCARD_PROTOCOL_TX;
+					int protocol = (int) WinDefs.SCARD_PROTOCOL_T0;
 					
 					long status = trans.SCardConnect(selectedRdr, mode, protocol); 	
 					
