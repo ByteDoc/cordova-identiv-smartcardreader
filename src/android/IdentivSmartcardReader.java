@@ -398,7 +398,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 							} catch (JSONException e) {
 								Log.e("IdentivSmartcardReader", "JSONException: " + e);
 							}
-							callbackContext.error(args);
+							callbackContext.error("IdentivSmartcardReader, SCardControl, Unkown Command");
 							return true;
 						}
 							
@@ -412,7 +412,6 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 								sstr = sstr.toUpperCase() + Integer.toHexString(temp) + " " ;
 							}
 						}								
-						result.setText(sstr);
 					}while(false);	
 					
 
