@@ -297,15 +297,18 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		
 		SCard trans = new SCard();
 		String sstr = "";
+		String rstr = "";
 		boolean flag = false;
 		CharSequence[] items = null;
+		
+		long lRetVal;
 		
 		String selectedRdr = "Identiv uTrust 4701 F CL Reader 0";
 		//selectedRdr = (String) items[item];
 		
 		try{
 			
-			long lRetval = trans.USBRequestPermission(getApplicationContext());
+			lRetval = trans.USBRequestPermission(getApplicationContext());
 			argsObject.put("USBRequestPermission", lRetval);
 			Log.d("USBRequestPermission", "Result - " + lRetval);
 			
@@ -323,6 +326,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 
 			selectedRdr = (String) items[1];
 			
+			
         } catch (JSONException e) {
             Log.e("IdentivSmartcardReader", "JSONException: " + e);
 			return true;
@@ -336,7 +340,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		do{
 			if(flag) break;
 			
-			long lRetVal = trans.SCardGetStatusChange(0, rgReaderStates, 1);
+			lRetVal = trans.SCardGetStatusChange(0, rgReaderStates, 1);
 			if((rgReaderStates[0].getnEventState() & WinDefs.SCARD_STATE_CHANGED) == WinDefs.SCARD_STATE_CHANGED){
 				rgReaderStates[0].setnEventState(rgReaderStates[0].getnEventState() - WinDefs.SCARD_STATE_CHANGED);
 				if(rgReaderStates[0].getnEventState() == WinDefs.SCARD_STATE_PRESENT){
@@ -349,6 +353,69 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 							sstr = sstr.toUpperCase() + Integer.toHexString(temp) + " " ;
 						}
 					}
+					
+					// connect the card to read details
+					int mode = (int) WinDefs.SCARD_SHARE_EXCLUSIVE;
+					int protocol = (int) WinDefs.SCARD_PROTOCOL_TX;
+					
+					long status = trans.SCardConnect(readerName, mode, protocol); 	
+					
+					try{
+						argsObject.put("SCardConnect", status);
+						Log.d("SCardConnect", "Result - " + status);
+					} catch (JSONException e) {
+						Log.e("IdentivSmartcardReader", "JSONException: " + e);
+					}
+		
+		
+					String transmitCmd = "ffca000000";
+					// taken from https://stackoverflow.com/questions/9514684/what-apdu-command-gets-card-id
+					byte[] buf = transmitCmd.getBytes();
+					byte[] inbuf = new byte[transmitCmd.length()/2];
+					do{
+						for(int i = 0; i < inbuf.length*2; i++){
+							if(48 <= buf[i] && buf[i] <= 57){
+								buf[i] = (byte) ((buf[i] & 0x0F));
+							}else if((97 <= buf[i] && buf[i] <= 102) || (65 <= buf[i] && buf[i] <= 70)){
+								buf[i] = (byte) ((buf[i] + 9) & 0x0F);
+							}
+						}
+						for(int i = 0, j = 0; i < inbuf.length*2; ++i,j++){
+							inbuf[j] = (byte) ((buf[i]<<4) | (buf[++i]));
+						}
+						
+						SCardIOBuffer transmit = trans.new SCardIOBuffer();
+						transmit.setnInBufferSize(inbuf.length);
+						transmit.setAbyInBuffer(inbuf);
+						transmit.setnOutBufferSize(0x2000);
+						transmit.setAbyOutBuffer(new byte[0x2000]);
+						lRetval = trans.SCardControl((int)WinDefs.IOCTL_CCID_ESCAPE, transmit);
+						if(lRetval != 0){
+							// Toast.makeText(getApplicationContext(), "Unkown Command", Toast.LENGTH_SHORT).show();
+							try{
+								argsObject.put("SCardControl", status);
+								Log.d("SCardControl", "Result - " + status);
+							} catch (JSONException e) {
+								Log.e("IdentivSmartcardReader", "JSONException: " + e);
+							}
+							callbackContext.error(args);
+							return true;
+						}
+							
+						for(int i = 0; i < transmit.getnBytesReturned(); i++){
+							int temp = transmit.getAbyOutBuffer()[i] & 0xFF;
+							if(temp < 16){
+								rstr = rstr.toUpperCase() + "0" + Integer.toHexString(transmit.getAbyOutBuffer()[i]) ;
+								sstr = sstr.toUpperCase() + "0" + Integer.toHexString(transmit.getAbyOutBuffer()[i]) + " ";
+							}else{
+								rstr = rstr.toUpperCase() + Integer.toHexString(temp) ;
+								sstr = sstr.toUpperCase() + Integer.toHexString(temp) + " " ;
+							}
+						}								
+						result.setText(sstr);
+					}while(false);	
+					
+
 				}else{
 					sstr = "Card Absent";
 				}
@@ -356,7 +423,10 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 			if (sstr != "" && sstr != "Card Absent") {
 				try{
 					argsObject.put("readerId", sstr);
-					Log.d("IdentivSmartcardReader", "Result - " + sstr);
+					Log.d("IdentivSmartcardReader", "Result sstr - " + sstr);
+					
+					argsObject.put("readerId_rstr", rstr);
+					Log.d("IdentivSmartcardReader", "Result rstr - " + rstr);
 				} catch (JSONException e) {
 					Log.e("IdentivSmartcardReader", "JSONException: " + e);
 				}
