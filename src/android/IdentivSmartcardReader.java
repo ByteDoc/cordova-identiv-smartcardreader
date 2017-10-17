@@ -308,7 +308,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		
 		try{
 			
-			lRetval = trans.USBRequestPermission(getApplicationContext());
+			long lRetval = trans.USBRequestPermission(getApplicationContext());
 			argsObject.put("USBRequestPermission", lRetval);
 			Log.d("USBRequestPermission", "Result - " + lRetval);
 			
@@ -358,7 +358,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 					int mode = (int) WinDefs.SCARD_SHARE_EXCLUSIVE;
 					int protocol = (int) WinDefs.SCARD_PROTOCOL_TX;
 					
-					long status = trans.SCardConnect(readerName, mode, protocol); 	
+					long status = trans.SCardConnect(selectedRdr, mode, protocol); 	
 					
 					try{
 						argsObject.put("SCardConnect", status);
