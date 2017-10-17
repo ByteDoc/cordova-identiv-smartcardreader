@@ -413,7 +413,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 						
 						transmit.setnOutBufferSize(0xffffff);
 						transmit.setAbyOutBuffer(new byte[0xffffff]);
-						long lRetval = trans.SCardControl((int)WinDefs.IOCTL_CCID_ESCAPE, transmit);
+						long lRetval = trans.SCardTransmit(transmit);
 						if(lRetval != 0){
 							// Toast.makeText(getApplicationContext(), "Unkown Command", Toast.LENGTH_SHORT).show();
 							try{
