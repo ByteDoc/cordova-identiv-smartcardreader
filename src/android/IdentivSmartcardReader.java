@@ -399,7 +399,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 								Log.e("IdentivSmartcardReader", "JSONException: " + e);
 							}
 							callbackContext.error("IdentivSmartcardReader, SCardControl, Unkown Command");
-							return true;
+							return true; // just some comment
 						}
 							
 						for(int i = 0; i < transmit.getnBytesReturned(); i++){
