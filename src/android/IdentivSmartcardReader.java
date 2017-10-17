@@ -355,7 +355,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 					// }
 					
 					// connect the card to read details
-					int mode = (int) WinDefs.SCARD_SHARE_EXCLUSIVE;
+					int mode = (int) WinDefs.SCARD_SHARE_SHARED;
 					int protocol = (int) WinDefs.SCARD_PROTOCOL_T0;
 					
 					long status = trans.SCardConnect(selectedRdr, mode, protocol); 	
@@ -384,17 +384,17 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 							//(byte) (Integer.parseInt("ef",16) & 0xff);
 							
 							if(48 <= buf[i] && buf[i] <= 57){
-								Log.d("SCardControl_TRANSMIT", "buf["+i+"]=(" + buf[i] + ")");
+								//Log.d("SCardControl_TRANSMIT", "buf["+i+"]=(" + buf[i] + ")");
 								buf[i] = (byte) ((buf[i] & 0x0F));
 							}else if((97 <= buf[i] && buf[i] <= 102) || (65 <= buf[i] && buf[i] <= 70)){
-								Log.d("SCardControl_TRANSMIT", "buf["+i+"]=(" + buf[i] + ") ... adding 9");
+								//Log.d("SCardControl_TRANSMIT", "buf["+i+"]=(" + buf[i] + ") ... adding 9");
 								buf[i] = (byte) ((buf[i] + 9) & 0x0F);
 							}
 						}
-						Log.d("SCardControl_TRANSMIT", "inbuf.length=(" + inbuf.length + ")");
+						//Log.d("SCardControl_TRANSMIT", "inbuf.length=(" + inbuf.length + ")");
 						for(int i = 0, j = 0; i < inbuf.length*2; ++i,j++){
 							inbuf[j] = (byte) ((buf[i]<<4) | (buf[++i]));
-							Log.d("SCardControl_TRANSMIT", "inbuf["+j+"]=(" + inbuf[j] + ")");
+							//Log.d("SCardControl_TRANSMIT", "inbuf["+j+"]=(" + inbuf[j] + ")");
 						}
 						
 						
