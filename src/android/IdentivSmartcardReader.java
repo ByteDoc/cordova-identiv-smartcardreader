@@ -375,20 +375,25 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 					do{
 						for(int i = 0; i < inbuf.length*2; i++){
 							if(48 <= buf[i] && buf[i] <= 57){
+								Log.d("SCardControl_TRANSMIT", "buf["+i+"]=(" + buf[i] + ")");
 								buf[i] = (byte) ((buf[i] & 0x0F));
 							}else if((97 <= buf[i] && buf[i] <= 102) || (65 <= buf[i] && buf[i] <= 70)){
+								Log.d("SCardControl_TRANSMIT", "buf["+i+"]=(" + buf[i] + ") ... adding 9");
 								buf[i] = (byte) ((buf[i] + 9) & 0x0F);
 							}
 						}
+						Log.d("SCardControl_TRANSMIT", "inbuf.length=(" + inbuf.length + ")");
 						for(int i = 0, j = 0; i < inbuf.length*2; ++i,j++){
 							inbuf[j] = (byte) ((buf[i]<<4) | (buf[++i]));
+							Log.d("SCardControl_TRANSMIT", "inbuf["+j+"]=(" + inbuf[j] + ")");
 						}
+						
 						
 						SCardIOBuffer transmit = trans.new SCardIOBuffer();
 						transmit.setnInBufferSize(inbuf.length);
 						transmit.setAbyInBuffer(inbuf);
-						transmit.setnOutBufferSize(0x2000);
-						transmit.setAbyOutBuffer(new byte[0x2000]);
+						transmit.setnOutBufferSize(0xffffff);
+						transmit.setAbyOutBuffer(new byte[0xffffff]);
 						long lRetval = trans.SCardControl((int)WinDefs.IOCTL_CCID_ESCAPE, transmit);
 						if(lRetval != 0){
 							// Toast.makeText(getApplicationContext(), "Unkown Command", Toast.LENGTH_SHORT).show();
@@ -399,7 +404,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 								Log.e("IdentivSmartcardReader", "JSONException: " + e);
 							}
 							callbackContext.error("IdentivSmartcardReader, SCardControl, Unkown Command");
-							return true; // just some comment
+							return true;
 						}
 							
 						for(int i = 0; i < transmit.getnBytesReturned(); i++){
