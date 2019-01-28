@@ -23,7 +23,7 @@
 		<source-file src="src/android/IdentivSmartcardReader.java" target-dir="src/org/apache/cordova/plugin/" />
 		<framework src="src/android/app-release.gradle" custom="true" type="gradleReference" />
 		
-		<resource-file src="jar/androidSCardV1.2.jar" target="jar/androidSCardV1.2.jar" />
+		<resource-file src="src/android/libs/androidSCardV1.2.jar" target="src/android/libs/androidSCardV1.2.jar" />
 		
 	</platform>
 </plugin>
