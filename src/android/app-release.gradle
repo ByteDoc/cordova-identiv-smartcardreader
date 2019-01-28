@@ -3,7 +3,7 @@ repositories {
 
 }
 dependencies {
-	compile(name: 'jar/androidSCardV12.jar', ext: 'jar')
+	compile(name: 'jar/androidSCardV12', ext: 'jar')
 }
 android {
 	packagingOptions {
