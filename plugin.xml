@@ -24,7 +24,7 @@
 		
 		<framework src="src/android/app-release.gradle" custom="true" type="gradleReference" />
 		
-		<resource-file src="jar/androidSCardV12.jar" target="jar/androidSCardV12.jar" />
+		<resource-file src="jar/androidSCardV12.jar" target-dir="jar" />
 		
 	</platform>
 </plugin>
