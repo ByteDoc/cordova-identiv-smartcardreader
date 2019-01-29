@@ -1,12 +1,13 @@
 repositories {
 	jcenter()
 	flatDir{
-    dirs 'jar', 'libs'
+		dirs 'jar', 'libs'
     }
 
 }
 dependencies {
-	implementation(name: 'androidSCardV12', ext: 'jar')
+	debugCompile(name: 'androidSCardV12', ext: 'jar')
+	releaseCompile(name: 'androidSCardV12', ext: 'jar')
 }
 android {
 	packagingOptions {
