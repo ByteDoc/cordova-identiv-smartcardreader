@@ -62,28 +62,30 @@ public class IdentivSmartcardReader extends CordovaPlugin {
             return true;
         }
 
+		final JSONArray x_args = args;
+		final CallbackContext x_callbackContext = callbackContext;
 		cordova.getThreadPool().execute(new Runnable() {
             public void run() {     // Thread-safe
 			
 				switch (action) {
 					case TEST_READER:
-						return testReader(args, callbackContext);
+						return testReader(x_args, x_callbackContext);
 					case GET_USB_PERMISSION:
-						return getUSBPermission(args, callbackContext);
+						return getUSBPermission(x_args, x_callbackContext);
 					case ESTABLISH_CONTEXT:
-						return establishContext(args, callbackContext);
+						return establishContext(x_args, x_callbackContext);
 					case RELEASE_CONTEXT:
-						return releaseContext(args, callbackContext);
+						return releaseContext(x_args, x_callbackContext);
 					case TEST_LIST:
-						return testList(args, callbackContext);
+						return testList(x_args, x_callbackContext);
 						
 					case GET_CARD_STATUS_CHANGE:
-						return getCardStatusChange(args, callbackContext);
+						return getCardStatusChange(x_args, x_callbackContext);
 						
 					case CARD_CONNECT:
-						return cardConnect(args, callbackContext);
+						return cardConnect(x_args, x_callbackContext);
 					case CARD_DISCONNECT:
-						return cardDisconnect(args, callbackContext);
+						return cardDisconnect(x_args, x_callbackContext);
 				}
 				
             }
