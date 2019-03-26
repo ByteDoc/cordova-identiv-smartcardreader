@@ -61,35 +61,27 @@ public class IdentivSmartcardReader extends CordovaPlugin {
             this.echo(message, callbackContext, args);
             return true;
         }
-
-		final JSONArray x_args = args;
-		final CallbackContext x_callbackContext = callbackContext;
-		cordova.getThreadPool().execute(new Runnable() {
-            public void run() {     // Thread-safe
-			
-				switch (action) {
-					case TEST_READER:
-						return testReader(x_args, x_callbackContext);
-					case GET_USB_PERMISSION:
-						return getUSBPermission(x_args, x_callbackContext);
-					case ESTABLISH_CONTEXT:
-						return establishContext(x_args, x_callbackContext);
-					case RELEASE_CONTEXT:
-						return releaseContext(x_args, x_callbackContext);
-					case TEST_LIST:
-						return testList(x_args, x_callbackContext);
-						
-					case GET_CARD_STATUS_CHANGE:
-						return getCardStatusChange(x_args, x_callbackContext);
-						
-					case CARD_CONNECT:
-						return cardConnect(x_args, x_callbackContext);
-					case CARD_DISCONNECT:
-						return cardDisconnect(x_args, x_callbackContext);
-				}
+		
+		switch (action) {
+			case TEST_READER:
+				return testReader(args, callbackContext);
+			case GET_USB_PERMISSION:
+				return getUSBPermission(args, callbackContext);
+			case ESTABLISH_CONTEXT:
+				return establishContext(args, callbackContext);
+			case RELEASE_CONTEXT:
+				return releaseContext(args, callbackContext);
+			case TEST_LIST:
+				return testList(args, callbackContext);
 				
-            }
-        });
+			case GET_CARD_STATUS_CHANGE:
+				return getCardStatusChange(args, callbackContext);
+				
+			case CARD_CONNECT:
+				return cardConnect(args, callbackContext);
+			case CARD_DISCONNECT:
+				return cardDisconnect(args, callbackContext);
+		}
         
         return false;
     }
@@ -303,6 +295,11 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 	
 	private boolean getCardStatusChange(JSONArray args, CallbackContext callbackContext) {
 		
+	
+		cordova.getThreadPool().execute(new Runnable() {
+            public void run() {     // Thread-safe	
+        
+		
 		SCard trans = new SCard();
 		String sstr = "";
 		String rstr = "";
@@ -480,6 +477,10 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 			rgReaderStates[0].setnCurrentState(rgReaderStates[0].getnEventState());
 			rgReaderStates[0].setnEventState(nTemp);
 		}while(true);
+		
+		
+		    }
+        });
 		
 		return true;
 		
