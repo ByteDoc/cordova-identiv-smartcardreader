@@ -334,7 +334,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 			
         } catch (JSONException e) {
             Log.e("IdentivSmartcardReader", "JSONException: " + e);
-			return true;
+			//return true;
         }
 		
 		SCARD_READERSTATE[] rgReaderStates = new SCARD_READERSTATE[5];
@@ -439,7 +439,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 								Log.e("IdentivSmartcardReader", "JSONException: " + e);
 							}
 							callbackContext.error("IdentivSmartcardReader, SCardControl, Unkown Command");
-							return true;
+							//return true;
 						}
 							
 						for(int i = 0; i < transmit.getnBytesReturned(); i++){
@@ -471,7 +471,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 				}
 				callbackContext.success(args);
 				
-				return true;
+				//return true;
 			}
 			int nTemp = rgReaderStates[0].getnCurrentState(); 
 			rgReaderStates[0].setnCurrentState(rgReaderStates[0].getnEventState());
