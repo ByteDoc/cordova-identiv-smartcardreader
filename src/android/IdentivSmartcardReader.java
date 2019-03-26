@@ -331,7 +331,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 
 			selectedRdr = (String) items[1];	// changed from index 1 to 0
 			
-			Log.e("IdentivSmartcardReader", "deviceList.size: " + ((String) deviceList.size()) );
+			Log.e("IdentivSmartcardReader", "deviceList.size: " +  Integer.toString(deviceList.size()) );
 			
 			
         } catch (JSONException e) {
