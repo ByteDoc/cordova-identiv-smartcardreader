@@ -293,7 +293,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		return true;
 	}
 	
-	private boolean getCardStatusChange(JSONArray args, CallbackContext callbackContext) {
+	private boolean getCardStatusChange(final JSONArray args, final CallbackContext callbackContext) {
 		
 	
 		cordova.getThreadPool().execute(new Runnable() {
