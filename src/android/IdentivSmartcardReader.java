@@ -298,11 +298,11 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		SCard trans = new SCard();
 		long lRetval;
 
-		lRetVal	= trans.USBRequestPermission(getApplicationContext());
+		lRetval	= trans.USBRequestPermission(getApplicationContext());
 		argsObject.put("USBRequestPermission", lRetval);
 		Log.d("USBRequestPermission", "Result - " + lRetval);
 		
-		if (lRetVal != 0) {
+		if (lRetval != 0) {
 			Log.d("USBRequestPermission", "NO USB permission - cancelling getCardStatusChange");
 			callbackContext.error("IdentivSmartcardReader, USBRequestPermission: NO USB permission - cancelling getCardStatusChange");
 			return false;
@@ -354,7 +354,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		do{
 			if(flag) break;
 			
-			lRetVal = trans.SCardGetStatusChange(0, rgReaderStates, 1);		// changed from index 1 to 0 (second parameter)
+			lRetval = trans.SCardGetStatusChange(0, rgReaderStates, 1);		// changed from index 1 to 0 (second parameter)
 			if((rgReaderStates[0].getnEventState() & WinDefs.SCARD_STATE_CHANGED) == WinDefs.SCARD_STATE_CHANGED){
 				rgReaderStates[0].setnEventState(rgReaderStates[0].getnEventState() - WinDefs.SCARD_STATE_CHANGED);
 				if(rgReaderStates[0].getnEventState() == WinDefs.SCARD_STATE_PRESENT){
