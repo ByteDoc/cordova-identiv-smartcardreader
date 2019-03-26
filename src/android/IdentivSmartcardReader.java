@@ -88,7 +88,6 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 				
             }
         });
-        return true;
         
         return false;
     }
