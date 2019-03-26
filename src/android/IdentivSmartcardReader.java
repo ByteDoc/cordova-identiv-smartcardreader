@@ -296,7 +296,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 	private boolean getCardStatusChange(final JSONArray args, final CallbackContext callbackContext) {
 		
 		final SCard trans = new SCard();
-		final long lRetval;
+		long lRetval;
 
 		lRetval	= trans.USBRequestPermission(getApplicationContext());
 		argsObject.put("USBRequestPermission", lRetval);
@@ -311,7 +311,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		cordova.getThreadPool().execute(new Runnable() {
             public void run() {     // Thread-safe	
         
-		
+		long lRetval;
 		
 		String sstr = "";
 		String rstr = "";
