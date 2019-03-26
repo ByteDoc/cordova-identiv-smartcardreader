@@ -329,7 +329,9 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 			//Log.d("IdenitveGetZ", "Result - " + lRetval);
 			items = deviceList.toArray(new CharSequence[deviceList.size()]);
 
-			selectedRdr = (String) items[0];	// changed from index 1 to 0
+			selectedRdr = (String) items[1];	// changed from index 1 to 0
+			
+			Log.e("IdentivSmartcardReader", "deviceList.size: " + ((String) deviceList.size()) );
 			
 			
         } catch (JSONException e) {
@@ -346,7 +348,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		do{
 			if(flag) break;
 			
-			lRetVal = trans.SCardGetStatusChange(0, rgReaderStates, 0);		// changed from index 1 to 0 (second parameter)
+			lRetVal = trans.SCardGetStatusChange(0, rgReaderStates, 1);		// changed from index 1 to 0 (second parameter)
 			if((rgReaderStates[0].getnEventState() & WinDefs.SCARD_STATE_CHANGED) == WinDefs.SCARD_STATE_CHANGED){
 				rgReaderStates[0].setnEventState(rgReaderStates[0].getnEventState() - WinDefs.SCARD_STATE_CHANGED);
 				if(rgReaderStates[0].getnEventState() == WinDefs.SCARD_STATE_PRESENT){
