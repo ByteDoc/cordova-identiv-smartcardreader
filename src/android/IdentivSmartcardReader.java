@@ -295,8 +295,10 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 	
 	private boolean getCardStatusChange(final JSONArray args, final CallbackContext callbackContext) {
 		
-	
-		long lRetval = trans.USBRequestPermission(getApplicationContext());
+		SCard trans = new SCard();
+		long lRetval;
+
+		lRetVal	= trans.USBRequestPermission(getApplicationContext());
 		argsObject.put("USBRequestPermission", lRetval);
 		Log.d("USBRequestPermission", "Result - " + lRetval);
 		
@@ -310,13 +312,11 @@ public class IdentivSmartcardReader extends CordovaPlugin {
             public void run() {     // Thread-safe	
         
 		
-		SCard trans = new SCard();
+		
 		String sstr = "";
 		String rstr = "";
 		boolean flag = false;
 		CharSequence[] items = null;
-		
-		long lRetVal;
 		
 		String selectedRdr = "Identiv uTrust 4701 F CL Reader 0";
 		//selectedRdr = (String) items[item];
