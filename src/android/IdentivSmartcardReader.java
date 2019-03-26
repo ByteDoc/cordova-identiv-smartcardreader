@@ -298,15 +298,24 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		final SCard trans = new SCard();
 		long lRetval_usb;
 
-		lRetval_usb	= trans.USBRequestPermission(getApplicationContext());
-		argsObject.put("USBRequestPermission", lRetval_usb);
-		Log.d("USBRequestPermission", "Result - " + lRetval_usb);
-		
-		if (lRetval_usb != 0) {
-			Log.d("USBRequestPermission", "NO USB permission - cancelling getCardStatusChange");
-			callbackContext.error("IdentivSmartcardReader, USBRequestPermission: NO USB permission - cancelling getCardStatusChange");
+		try{
+			lRetval_usb	= trans.USBRequestPermission(getApplicationContext());
+			argsObject.put("USBRequestPermission", lRetval_usb);
+			Log.d("USBRequestPermission", "Result - " + lRetval_usb);
+			
+			if (lRetval_usb != 0) {
+				Log.d("USBRequestPermission", "NO USB permission - cancelling getCardStatusChange");
+				callbackContext.error("IdentivSmartcardReader, USBRequestPermission: NO USB permission - cancelling getCardStatusChange");
+				return false;
+			}
+		} catch (JSONException e) {
+			Log.e("IdentivSmartcardReader", "JSONException: " + e);
+			callbackContext.error("IdentivSmartcardReader, USBRequestPermission, JSONException: " + e);
 			return false;
 		}
+		
+		
+
 	
 		cordova.getThreadPool().execute(new Runnable() {
             public void run() {     // Thread-safe	
