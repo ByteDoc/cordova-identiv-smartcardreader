@@ -315,7 +315,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		
 		String sstr = "";
 		String rstr = "";
-		boolean flag = false;
+		boolean flagCancelGetStatusChange = false;
 		CharSequence[] items = null;
 		
 		String selectedRdr = "Identiv uTrust 4701 F CL Reader 0";
@@ -352,7 +352,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 		rgReaderStates[0].setSzReader(selectedRdr);
 		
 		do{
-			if(flag) break;
+			if(flagCancelGetStatusChange) break;
 			
 			lRetval = trans.SCardGetStatusChange(0, rgReaderStates, 1);		// changed from index 1 to 0 (second parameter)
 			if((rgReaderStates[0].getnEventState() & WinDefs.SCARD_STATE_CHANGED) == WinDefs.SCARD_STATE_CHANGED){
@@ -438,7 +438,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 						
 						transmit.setnOutBufferSize(0xffffff);
 						transmit.setAbyOutBuffer(new byte[0xffffff]);
-						long lRetval = trans.SCardTransmit(transmit);
+						lRetval = trans.SCardTransmit(transmit);
 						if(lRetval != 0){
 							// Toast.makeText(getApplicationContext(), "Unkown Command", Toast.LENGTH_SHORT).show();
 							try{
@@ -447,6 +447,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 							} catch (JSONException e) {
 								Log.e("IdentivSmartcardReader", "JSONException: " + e);
 							}
+							flagCancelGetStatusChange = true;
 							callbackContext.error("IdentivSmartcardReader, SCardControl, Unkown Command");
 							//return true;
 						}
@@ -478,6 +479,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 				} catch (JSONException e) {
 					Log.e("IdentivSmartcardReader", "JSONException: " + e);
 				}
+				flagCancelGetStatusChange = true;
 				callbackContext.success(args);
 				
 				//return true;
