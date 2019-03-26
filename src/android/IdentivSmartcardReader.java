@@ -334,7 +334,7 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 			
         } catch (JSONException e) {
             Log.e("IdentivSmartcardReader", "JSONException: " + e);
-			callbackContext.error("IdentivSmartcardReader, JSONException: " + e");
+			callbackContext.error("IdentivSmartcardReader, JSONException: " + e);
 			//return true;
         }
 		
