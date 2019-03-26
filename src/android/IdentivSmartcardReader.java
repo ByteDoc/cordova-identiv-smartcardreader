@@ -295,8 +295,8 @@ public class IdentivSmartcardReader extends CordovaPlugin {
 	
 	private boolean getCardStatusChange(final JSONArray args, final CallbackContext callbackContext) {
 		
-		SCard trans = new SCard();
-		long lRetval;
+		final SCard trans = new SCard();
+		final long lRetval;
 
 		lRetval	= trans.USBRequestPermission(getApplicationContext());
 		argsObject.put("USBRequestPermission", lRetval);
