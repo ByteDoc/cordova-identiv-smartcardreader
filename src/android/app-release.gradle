@@ -2,7 +2,9 @@ repositories {
 	flatDir{
 		dirs 'jar', 'libs'
 	}
-	jcenter( url "https://jcenter.bintray.com/" )
+	jcenter{
+		url "https://jcenter.bintray.com/"
+	}
 }
 dependencies {
 	compile fileTree(dir: 'jar', include: ['*.jar'])
