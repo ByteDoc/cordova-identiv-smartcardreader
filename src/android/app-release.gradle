@@ -5,7 +5,7 @@ repositories {
 	jcenter()
 }
 dependencies {
-	compile fileTree(dir: 'src/jar', include: ['*.jar'])
+	compile fileTree(dir: 'jar', include: ['*.jar'])
 	debugCompile(name: 'androidSCardV12', ext: 'jar')
 	releaseCompile(name: 'androidSCardV12', ext: 'jar')
 }
