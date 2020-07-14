@@ -2,14 +2,10 @@ repositories {
 	flatDir{
 		dirs 'jar', 'libs'
 	}
-	jcenter{
-		url "https://jcenter.bintray.com/"
-	}
+	jcenter()
 }
 dependencies {
-	compile fileTree(dir: 'jar', include: ['*.jar'])
-	debugCompile(name: 'androidSCardV12', ext: 'jar')
-	releaseCompile(name: 'androidSCardV12', ext: 'jar')
+	implementation (name: 'androidSCardV12', ext: 'jar')
 }
 android {
 	packagingOptions {
